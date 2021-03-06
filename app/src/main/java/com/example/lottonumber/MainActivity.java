@@ -2,7 +2,9 @@ package com.example.lottonumber;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -26,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     EditText editText;
     Button button;
     TextView textView;
+    Button goQrScannerButton;
 
     String lotto_No;
     String[] lotto_number = {"drwtNo1", "drwtNo2", "drwtNo3", "drwtNo4", "drwtNo5", "drwtNo6", "bnusNo"};
@@ -40,11 +44,23 @@ public class MainActivity extends AppCompatActivity {
         editText = findViewById(R.id.editText);
         textView = findViewById(R.id.textView);
         button = findViewById(R.id.button);
+        goQrScannerButton = findViewById(R.id.qrscannerButton);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 requestLottoNumber();
+            }
+        });
+
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+        goQrScannerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, QrScanner.class);
+                startActivity(intent);
             }
         });
     }
@@ -78,10 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }) {
+            @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                return  params;
-
+                return params;
             }
         };
         request.setShouldCache(false);

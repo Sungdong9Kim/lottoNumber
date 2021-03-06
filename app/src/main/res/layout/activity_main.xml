@@ -26,4 +26,10 @@
         android:textSize="16dp"
         android:id="@+id/textView"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="QR Scanner"
+        android:id="@+id/qrscannerButton"/>
+
 </LinearLayout>
